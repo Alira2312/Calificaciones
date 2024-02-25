@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Programa de Calificaciones</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Programa de Calificaciones</h1>
+        <div id="tabla-resultados"></div>
+        <div id="promedio-general"></div>
+    </div>
+
+    <script>
+        function main() {
+            // Solicitar la cantidad de alumnos
+            var num_alumnos = parseInt(prompt("Ingrese el número de alumnos: "));
+
+            // Crear un objeto para almacenar los nombres y calificaciones de los alumnos
+            var alumnos = {};
+
+            // Solicitar el nombre y la calificación de cada alumno
+            for (var i = 0; i < num_alumnos; i++) {
+                var nombre = prompt("Ingrese el nombre del alumno " + (i + 1) + ": ");
+                var calificacion = parseFloat(prompt("Ingrese la calificación del alumno " + (i + 1) + " " + nombre + " : "));
+
+                // Almacenar el nombre y la calificación en el objeto
+                alumnos[nombre] = calificacion;
+            }
+
+            // Calcular el promedio general
+            var total_calificaciones = 0;
+            for (var nombre in alumnos) {
+                total_calificaciones += alumnos[nombre];
+            }
+            var promedio_general = total_calificaciones / num_alumnos;
+
+            // Crear la tabla
+            var table = '<table class="table"><thead><tr><th>Nombre</th><th>Calificación</th><th>Resultado</th></tr></thead><tbody>';
+            for (var nombre in alumnos) {
+                var mensaje = "";
+                var color = "";
+                if (alumnos[nombre] >= 7) {
+                    mensaje = "Aprobado, felicidades";
+                    color = "text-success";
+                } else if (alumnos[nombre] === 6) {
+                    mensaje = "Aprobado, uff de panzaso!!";
+                    color = "text-warining";
+                } else {
+                    mensaje = "Reprobado, favor de poner mas atencion!!";
+                    color = "text-danger";
+                }
+                table += '<tr><td>' + nombre + '</td><td>' + alumnos[nombre] + '</td><td class="' + color + '">' + mensaje + '</td></tr>';
+            }
+            table += '</tbody></table>';
+
+            // Insertar la tabla en el HTML
+            document.getElementById('tabla-resultados').innerHTML = table;
+
+            // Mostrar el promedio general
+            document.getElementById('promedio-general').innerHTML = 'Promedio general: ' + promedio_general.toFixed(2);
+        }
+
+        main();
+    </script>
+</body>
+
+</html>
